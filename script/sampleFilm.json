@@ -1,0 +1,58 @@
+{
+  "filmId": 1,
+  "title": "Minion",
+  "description": "A movie...",
+  "releaseYear": 2024,
+  "rentalDuration": 30,
+  "rentalRate": 10,
+  "length": 60,
+  "replacementCost": 10,
+  "rating": 5,
+  "lastUpdate": "2024-06-07T10:36:35",
+  "specialFeatures": "",
+  "language": {
+    "languageId": 1,
+    "name": "English",
+    "lastUpdate": "2024-06-07T10:36:35"
+  },
+  "inventories": [],
+  "filmCategories": [
+    {
+      "category": {
+        "categoryId": 1,
+        "name": "Comedy",
+        "lastUpdate": "2024-06-07T10:36:35"
+      },
+      "lastUpdate": "2024-06-07T10:36:35"
+    },
+    {
+      "category": {
+        "categoryId": 3,
+        "name": "Sci-fi",
+        "lastUpdate": "2024-06-07T10:36:35"
+      },
+      "lastUpdate": "2024-06-07T10:36:35"
+    }
+  ],
+  "filmActors": [
+    {
+      "actor": {
+        "actorId": 1,
+        "firstName": "Hoang",
+        "lastName": "Vu",
+        "lastUpdate": "2024-06-07T10:36:35"
+      },
+      "lastUpdate": "2024-06-07T10:36:35"
+    },
+    {
+      "actor": {
+        "actorId": 2,
+        "firstName": "Kien",
+        "lastName": "Le",
+        "lastUpdate": "2024-06-07T10:36:35"
+      },
+      "lastUpdate": "2024-06-07T10:36:35"
+    }
+  ],
+  "fulltext": ""
+}

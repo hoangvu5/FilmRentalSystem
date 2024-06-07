@@ -30,9 +30,6 @@ public class Customer {
     @Column(name = "gender")
     private Gender gender;
 
-    @Column(name = "email", unique = true, length = 50, nullable = false)
-    private String email;
-
     @Column(name = "active")
     private boolean active;
 
@@ -45,22 +42,23 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Phone> phones = new HashSet<>();
 
-    @ManyToMany(mappedBy = "customers")
+    @ManyToMany(mappedBy = "customers", cascade = CascadeType.ALL)
     private List<Order> orders;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Rental> rentals;
 
     public Customer() {
+        this.createdDate = this.lastUpdate = LocalDateTime.now();
+        this.active = true;
     }
 
     public Customer(String firstName, String lastName, Gender gender, String email, boolean active) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
-        this.email = email;
         this.active = active;
-        lastUpdate = LocalDateTime.now();
+        this.createdDate = this.lastUpdate = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -103,14 +101,6 @@ public class Customer {
         this.gender = gender;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public boolean isActive() {
         return active;
     }
@@ -150,4 +140,26 @@ public class Customer {
     public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
+
+    public List<Rental> getRentals() {
+        return rentals;
+    }
+
+    public void setRentals(List<Rental> rentals) {
+        this.rentals = rentals;
+    }
+
+    // Added by Hoang, for user registration feature
+    @OneToOne
+    @JoinColumn(name = "user_id", unique = true)
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    // End user registration attributes
 }
