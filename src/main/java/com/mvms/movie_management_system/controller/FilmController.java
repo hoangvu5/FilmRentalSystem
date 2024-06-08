@@ -23,6 +23,9 @@ public class FilmController {
     @PostMapping("/films")
     public Film createFilm(@RequestBody Film film) {
         System.out.println("FilmController - createFilm()");
+        if (film.getFilmId() != null && filmRepository.findById(film.getFilmId()).isPresent()) {
+            throw new IllegalArgumentException("Film[id = " + film.getFilmId() + "] has already existed.");
+        }
         return filmRepository.save(film);
     }
 
@@ -45,7 +48,7 @@ public class FilmController {
             throw new IllegalArgumentException("Film[id = " + id + "] does not exist.");
         } else {
             filmRepository.deleteById(id);
-            return "Customer[id = " + id + "] was deleted!";
+            return "Film[id = " + id + "] was deleted!";
         }
     }
 }
