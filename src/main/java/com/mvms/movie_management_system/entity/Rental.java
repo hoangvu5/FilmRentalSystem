@@ -1,5 +1,6 @@
 package com.mvms.movie_management_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ public class Rental {
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer customer;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "inventory_id", referencedColumnName = "inventory_id")
     private Inventory inventory;
@@ -38,10 +40,14 @@ public class Rental {
     @Column(name = "last_update", nullable = false)
     private LocalDateTime lastUpdate;
 
+    public Rental() {
+        this.lastUpdate = LocalDateTime.now();
+    }
+
     public Rental(LocalDate rentalDate, LocalDate returnDate) {
         this.rentalDate = rentalDate;
         this.returnDate = returnDate;
-        lastUpdate = LocalDateTime.now();
+        this.lastUpdate = LocalDateTime.now();
     }
 
     public Long getRentalId() {

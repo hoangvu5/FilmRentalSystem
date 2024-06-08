@@ -71,12 +71,12 @@ INSERT INTO inventory (film_id, last_update) VALUES
 (3, current_timestamp()),
 (3, current_timestamp());
 
-INSERT INTO customer (first_name, last_name, created_date, last_update) VALUES
-('Hoang', 'Vu', current_timestamp(), current_timestamp()),
-('Kien', 'Le', current_timestamp(), current_timestamp()),
-('Vinh', 'Do', current_timestamp(), current_timestamp()),
-('Minh', 'Nguyen', current_timestamp(), current_timestamp()),
-('Phuong', 'Nguyen', current_timestamp(), current_timestamp());
+INSERT INTO customer (first_name, last_name, created_date, last_update, active) VALUES
+('Hoang', 'Vu', current_timestamp(), current_timestamp(), 1),
+('Kien', 'Le', current_timestamp(), current_timestamp(), 1),
+('Vinh', 'Do', current_timestamp(), current_timestamp(), 1),
+('Minh', 'Nguyen', current_timestamp(), current_timestamp(), 1),
+('Phuong', 'Nguyen', current_timestamp(), current_timestamp(), 1);
 
 INSERT INTO rental (customer_id, inventory_id, rental_date, return_date, last_update) VALUES
 (1, 1, current_timestamp(), current_timestamp(), current_timestamp()),

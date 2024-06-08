@@ -51,4 +51,10 @@ public class FilmController {
             return "Film[id = " + id + "] was deleted!";
         }
     }
+
+    // Select films with category X, actor Y, and has 1 or more copies
+    @GetMapping("/films/query")
+    public List<Film> queryFilmSpecial(@RequestParam String categoryName, @RequestParam String actorName) {
+        return filmRepository.findFilmsByCategoryActorAndInventoryCount(categoryName, actorName);
+    }
 }
