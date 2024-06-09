@@ -1,5 +1,6 @@
 package com.mvms.movie_management_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -45,6 +46,7 @@ public class Customer {
     @ManyToMany(mappedBy = "customers", cascade = CascadeType.ALL)
     private List<Order> orders;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Rental> rentals;
 

@@ -1,5 +1,6 @@
 package com.mvms.movie_management_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ public class Inventory {
     @Column(name = "last_update", nullable = false)
     private LocalDateTime lastUpdate;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "film_id", referencedColumnName = "film_id")
     private Film film;
