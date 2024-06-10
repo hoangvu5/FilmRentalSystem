@@ -46,9 +46,9 @@ public class CustomerService {
         return customerRepository.findByFirstNameAndLastName(firstName, lastName);
     }
 
-    public Optional<Customer> getCustomerByEmailAddress(String emailAddress) {
-        return customerRepository.findByEmailAddress(emailAddress);
-    }
+//    public Optional<Customer> getCustomerByEmailAddress(String emailAddress) {
+//        return customerRepository.findByEmailAddress(emailAddress);
+//    }
 
     // Update an existing customer
     public Customer updateCustomer(Long id, Customer updatedCustomer) {

@@ -2,15 +2,17 @@ package com.mvms.movie_management_system.controller;
 
 import com.mvms.movie_management_system.entity.Staff;
 import com.mvms.movie_management_system.repository.StaffRepository;
-import com.mvms.movie_management_system.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
 public class StaffController{
     @Autowired
-    private StaffService staffService;
+    private StaffRepository staffRepository;
 
     @GetMapping("/staff")
     public List<Staff> fetchStaff(){
@@ -20,30 +22,32 @@ public class StaffController{
     @PostMapping("/staff")
     public Staff createStaff(@RequestBody Staff staff){
         System.out.println("StaffController - createStaff()");
-        if (staff.getStaffId() != null && staffService.getStaffbyID(staff.getStaffId())){
-            throw new IllegalArgumentException("Staff[id = " + staff.getStaffId() + "] has already existed.")
+        if (staff.getStaffId() != null && staffRepository.findById(staff.getStaffId()).isPresent()){
+            throw new IllegalArgumentException("Staff[id = " + staff.getStaffId() + "] has already existed.");
         }
+        return staffRepository.save(staff);
     }
+
     @PutMapping("/staff/{id}")
     public Staff updateStaff(@PathVariable Long id, @RequestBody Staff staff) {
         System.out.println("StaffController - updateStaff()");
-        Optional<Staff> dbStaff = staffService.getStaffById(id);
+        Optional<Staff> dbStaff = staffRepository.findById(id);
         if (dbStaff.isEmpty()) {
             throw new IllegalArgumentException("Staff[id = " + id + "] does not exist.");
         }
         else {
-            return staffService.updateStaff(id, staff);
+            return staffRepository.save(staff);
         }
     }
 
     @DeleteMapping("/staff/{id}")
     public String deleteStaff(@PathVariable Long id) {
         System.out.println("StaffController - deleteStaff()");
-        Optional<Staff> dbStaff = staffService.getStaffById(id);
+        Optional<Staff> dbStaff = staffRepository.findById(id);
         if (dbStaff.isEmpty()) {
             throw new IllegalArgumentException("Staff[id = " + id + "] does not exist.");
         } else {
-            staffService.deleteStaff(id);
+            staffRepository.deleteById(id);
             return "Staff[id = " + id + "] was deleted!";
         }
     }
