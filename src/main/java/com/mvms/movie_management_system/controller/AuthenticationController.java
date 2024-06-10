@@ -3,14 +3,15 @@ package com.mvms.movie_management_system.controller;
 import com.mvms.movie_management_system.api.entity.LoginBody;
 import com.mvms.movie_management_system.api.entity.LoginResponse;
 import com.mvms.movie_management_system.api.entity.RegistrationBody;
+import com.mvms.movie_management_system.entity.User;
 import com.mvms.movie_management_system.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -22,13 +23,13 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity registerUser(@Valid @RequestBody RegistrationBody registrationBody) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegistrationBody registrationBody) {
         System.out.println("AuthenticationController - registerUser()");
         try {
             userService.registerUser(registrationBody);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(Map.of("redirectUrl", "/dashboard"));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("error", e.getMessage()));
         }
     }
 
@@ -47,5 +48,10 @@ public class AuthenticationController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
+    }
+
+    @GetMapping("/me")
+    public User getLoggedInUserProfile(@AuthenticationPrincipal User user) {
+        return user;
     }
 }

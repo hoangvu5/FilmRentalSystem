@@ -48,13 +48,12 @@
 <!--                    <br>-->
                     <div class="text-center">
                         <button class="btn btn-primary" type="button" onclick="submitRegisterForm()" style="width: 100%;">Sign Up</button>
-<!--                        <input class="btn btn-primary" type="submit" value="Sign Up" style="width: 100%;">-->
                     </div>
                 </form>
 
-<!--                <div class="text-center" id="login-redirect" style="margin-top: 10px;">-->
-<!--                    Have an account? <a href="{% url 'login' %}">Sign In</a>-->
-<!--                </div>-->
+                <div class="text-center" id="login-redirect" style="margin-top: 10px;">
+                    Have an account? <a th:href="@{/login}">Sign In</a>
+                </div>
             </div>
         </div>
     </div>

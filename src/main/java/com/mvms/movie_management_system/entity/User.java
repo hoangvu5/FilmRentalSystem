@@ -1,5 +1,6 @@
 package com.mvms.movie_management_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,12 +14,14 @@ public class User {
     @Column(name = "username", nullable = false, length = 50)
     private String username;
 
+    @JsonIgnore
     @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Customer customer;
 

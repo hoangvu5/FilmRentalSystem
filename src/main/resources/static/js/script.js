@@ -40,16 +40,54 @@ function submitRegisterForm() {
         body: JSON.stringify(jsonData)
     })
     .then(response => {
-        if (response.ok) {
+        return response.json().then(data => ({
+            status: response.status,
+            ok: response.ok,
+            data: data
+        }));
+    })
+    .then(({ status, ok, data }) => {
+        if (ok) {
             console.log('Registration successful');
             appendSuccessMessage('Registration successful');
+            window.location.href = data.redirectUrl;
         } else {
             console.error('Registration failed');
-            appendErrorMessage('Registration failed');
+            appendErrorMessage(data.error || 'Registration failed');
         }
     })
     .catch(error => {
         console.error('Error:', error);
         appendErrorMessage('Registration failed');
+    });
+}
+
+function submitLoginForm() {
+    const form = document.getElementById('login-form');
+    const formData = new FormData(form);
+    const jsonData = {};
+    formData.forEach((value, key) => {
+        jsonData[key] = value;
+    });
+
+    fetch('/auth/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Login successful');
+            appendSuccessMessage('Login successful');
+        } else {
+            console.error('Login failed');
+            appendErrorMessage('Login failed');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        appendErrorMessage('Login failed');
     });
 }
