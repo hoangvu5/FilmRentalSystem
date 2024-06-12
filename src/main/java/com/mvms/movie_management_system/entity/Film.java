@@ -1,6 +1,10 @@
 package com.mvms.movie_management_system.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,36 +18,56 @@ public class Film {
     @Column(name = "film_id")
     private Long filmId;
 
+    @NotNull(message = "Title cannot be null")
+    @Size(min = 1, message = "Title must not be empty")
     @Column(name = "title", nullable = false)
     private String title;
 
+    @NotNull(message = "Description cannot be null")
+    @Size(min = 1, message = "Description must not be empty")
     @Column(name = "description", nullable = false)
     private String description;
 
+    @NotNull(message = "Release year cannot be null")
+    @Min(value = 1800, message = "Release year must be greater than or equal to 1900")
     @Column(name = "release_year", nullable = false)
     private Long releaseYear;
 
+    @NotNull(message = "Rental duration cannot be null")
+    @Min(value = 1, message = "Rental duration must be greater than or equal to 1")
     @Column(name = "rental_duration", nullable = false)
     private Long rentalDuration;
 
+    @NotNull(message = "Rental rate cannot be null")
+    @Min(value = 0, message = "Rental rate must be greater than or equal to 0")
     @Column(name = "rental_rate", nullable = false)
     private Long rentalRate;
 
+    @NotNull(message = "Length cannot be null")
+    @Min(value = 1, message = "Length must be greater than or equal to 1")
     @Column(name = "length", nullable = false)
     private Long length;
 
+    @NotNull(message = "Replacement cost cannot be null")
+    @Min(value = 0, message = "Replacement cost must be greater than or equal to 0")
     @Column(name = "replacement_cost", nullable = false)
     private Long replacementCost;
 
+    @NotNull(message = "Rating cannot be null")
+    @Min(value = 1, message = "Rating must be greater than or equal to 1")
+    @Max(value = 5, message = "Rating must be less than or equal to 5")
     @Column(name = "rating", nullable = false)
     private Long rating;
 
+    @NotNull(message = "Last update cannot be null")
     @Column(name = "last_update", nullable = false)
     private LocalDateTime lastUpdate;
 
+    @NotNull(message = "Special features cannot be null")
     @Column(name = "special_features", nullable = false)
     private String specialFeatures;
 
+    @NotNull(message = "Full text cannot be null")
     @Column(name = "full_text", nullable = false)
     private String fullText;
 

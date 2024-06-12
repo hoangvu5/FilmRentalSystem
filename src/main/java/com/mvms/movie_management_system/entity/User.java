@@ -29,6 +29,13 @@ public class User {
         this.customer = new Customer();
     }
 
+    public User(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.customer = new Customer();
+    }
+
     public Long getUserId() {
         return userId;
     }

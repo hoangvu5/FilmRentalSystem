@@ -1,60 +1,79 @@
 package com.mvms.movie_management_system.controller;
 
 import com.mvms.movie_management_system.entity.Film;
+import com.mvms.movie_management_system.exception.custom.RecordFoundException;
+import com.mvms.movie_management_system.exception.custom.RecordNotFoundException;
 import com.mvms.movie_management_system.repository.FilmRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/api/v1")
 public class FilmController {
     @Autowired
     private FilmRepository filmRepository;
 
     @GetMapping("/films")
-    public List<Film> fetchFilm() {
+    public ResponseEntity<List<Film>> fetchFilm() {
         System.out.println("FilmController - fetchFilm()");
-        return filmRepository.findAll();
+        return ResponseEntity.ok(filmRepository.findAll());
     }
 
     @PostMapping("/films")
-    public Film createFilm(@RequestBody Film film) {
+    public ResponseEntity<Film> createFilm(@Valid @RequestBody Film film) {
         System.out.println("FilmController - createFilm()");
         if (film.getFilmId() != null && filmRepository.findById(film.getFilmId()).isPresent()) {
-            throw new IllegalArgumentException("Film[id = " + film.getFilmId() + "] has already existed.");
+            throw new RecordFoundException("Film[id = " + film.getFilmId() + "] has already existed.");
         }
-        return filmRepository.save(film);
+        return ResponseEntity.ok(filmRepository.save(film));
+
     }
 
     @PutMapping("/films/{id}")
-    public Film updateFilm(@PathVariable Long id, @RequestBody Film film) {
+    public ResponseEntity<Film> updateFilm(@PathVariable Long id, @Valid @RequestBody Film film) {
         System.out.println("FilmController - updateFilm()");
         Optional<Film> dbFilm = filmRepository.findById(id);
         if (dbFilm.isEmpty()) {
-            throw new IllegalArgumentException("Film[id = " + id + "] does not exist.");
+            throw new RecordNotFoundException("Film[id = " + id + "] does not exist.");
         } else {
-            return filmRepository.save(film);
+            return ResponseEntity.ok(filmRepository.save(film));
         }
     }
 
     @DeleteMapping("/films/{id}")
-    public String deleteFilm(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteFilm(@PathVariable Long id) {
         System.out.println("FilmController - deleteFilm()");
         Optional<Film> dbFilm = filmRepository.findById(id);
         if (dbFilm.isEmpty()) {
-            throw new IllegalArgumentException("Film[id = " + id + "] does not exist.");
+            throw new RecordNotFoundException("Film[id = " + id + "] does not exist.");
         } else {
             filmRepository.deleteById(id);
-            return "Film[id = " + id + "] was deleted!";
+            return ResponseEntity.ok().build();
         }
     }
 
     // Select films with category X, actor Y, and has 1 or more copies
     @GetMapping("/films/query")
-    public List<Film> queryFilmSpecial(@RequestParam String categoryName, @RequestParam String actorName) {
-        return filmRepository.findFilmsByCategoryActorAndInventoryCount(categoryName, actorName);
+    public ResponseEntity<List<Film>> queryFilmSpecial(@RequestParam String categoryName, @RequestParam String actorName) {
+        return ResponseEntity.ok(filmRepository.findFilmsByCategoryActorAndInventoryCount(categoryName, actorName));
+    }
+
+    @GetMapping("/films/display_all")
+    public String displayAllFilms(Model model) {
+        List<Film> films = filmRepository.findAll();
+        model.addAttribute("films", films);
+        return "film_index";
+    }
+
+    @GetMapping("/films/film_all")
+    public String displayWithJQuery() {
+        return "film_all";
     }
 }

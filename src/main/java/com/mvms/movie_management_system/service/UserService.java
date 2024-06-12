@@ -3,6 +3,7 @@ package com.mvms.movie_management_system.service;
 import com.mvms.movie_management_system.api.entity.LoginBody;
 import com.mvms.movie_management_system.api.entity.RegistrationBody;
 import com.mvms.movie_management_system.entity.User;
+import com.mvms.movie_management_system.exception.custom.RecordFoundException;
 import com.mvms.movie_management_system.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class UserService {
     public User registerUser(RegistrationBody registrationBody) {
         if (userRepository.findByEmailIgnoreCase(registrationBody.getEmail()).isPresent() ||
             userRepository.findByUsernameIgnoreCase(registrationBody.getUsername()).isPresent()) {
-            throw new IllegalArgumentException("An user with the same username or email has already existed.");
+            throw new RecordFoundException("An user with the same username or email has already existed.");
         }
 
         User user = new User();

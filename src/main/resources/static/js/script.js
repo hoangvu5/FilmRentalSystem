@@ -1,93 +1,70 @@
-document.addEventListener('DOMContentLoaded', function() {
+$(document).ready(function() {
+    $('#register-form').on('submit', function(event) {
+        event.preventDefault();
+        submitRegisterForm();
+    });
 
+    $('#login-form').on('submit', function(event) {
+        event.preventDefault();
+        submitLoginForm();
+    });
 });
 
 function appendSuccessMessage(message) {
-    warnings_div = document.querySelector('#warnings');
-    message_div = document.createElement('div');
-    message_div.className = 'alert alert-success alert-dismissible fade show';
-    message_div.innerHTML = `
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        ${message}
-    `
-    warnings_div.appendChild(message_div);
+    const messageDiv = $('<div></div>')
+        .addClass('alert alert-success alert-dismissible fade show')
+        .html(`<button type="button" class="btn-close" data-bs-dismiss="alert"></button>${message}`);
+    $('#warnings').append(messageDiv);
 }
 
 function appendErrorMessage(message) {
-    warnings_div = document.querySelector('#warnings');
-    message_div = document.createElement('div');
-    message_div.className = 'alert alert-danger alert-dismissible fade show';
-    message_div.innerHTML = `
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        ${message}
-    `
-    warnings_div.appendChild(message_div);
+    const messageDiv = $('<div></div>')
+        .addClass('alert alert-danger alert-dismissible fade show')
+        .html(`<button type="button" class="btn-close" data-bs-dismiss="alert"></button>${message}`);
+    $('#warnings').append(messageDiv);
 }
 
 function submitRegisterForm() {
-    const form = document.getElementById('register-form');
+    const form = $('#register-form')[0];
     const formData = new FormData(form);
     const jsonData = {};
     formData.forEach((value, key) => {
         jsonData[key] = value;
     });
 
-    fetch('/auth/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(jsonData)
-    })
-    .then(response => {
-        return response.json().then(data => ({
-            status: response.status,
-            ok: response.ok,
-            data: data
-        }));
-    })
-    .then(({ status, ok, data }) => {
-        if (ok) {
-            console.log('Registration successful');
+    $.ajax({
+        url: '/auth/register',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(jsonData),
+        success: function(data) {
             appendSuccessMessage('Registration successful');
             window.location.href = data.redirectUrl;
-        } else {
-            console.error('Registration failed');
-            appendErrorMessage(data.error || 'Registration failed');
+        },
+        error: function(xhr) {
+            appendErrorMessage(xhr.responseJSON.message || 'Registration failed');
         }
     })
-    .catch(error => {
-        console.error('Error:', error);
-        appendErrorMessage('Registration failed');
-    });
 }
 
 function submitLoginForm() {
-    const form = document.getElementById('login-form');
+    const form = $('#login-form')[0];
     const formData = new FormData(form);
     const jsonData = {};
     formData.forEach((value, key) => {
         jsonData[key] = value;
     });
 
-    fetch('/auth/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(jsonData)
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log('Login successful');
+    $.ajax({
+        url: '/auth/login',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(jsonData),
+        success: function(data) {
             appendSuccessMessage('Login successful');
-        } else {
-            console.error('Login failed');
-            appendErrorMessage('Login failed');
+        },
+        error: function(xhr) {
+            appendErrorMessage('Incorrect username or password');
         }
     })
-    .catch(error => {
-        console.error('Error:', error);
-        appendErrorMessage('Login failed');
-    });
 }

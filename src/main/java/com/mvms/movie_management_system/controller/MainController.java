@@ -17,18 +17,14 @@ public class MainController {
     }
 
     @GetMapping("/register")
-    public String registerForm(Model model) {
+    public String registerForm() {
         System.out.println("MainController - register_form.html");
-        RegistrationBody registrationBody = new RegistrationBody();
-        model.addAttribute("registrationBody", registrationBody);
         return "register_form";
     }
 
     @GetMapping("/login")
-    public String loginForm(Model model) {
+    public String loginForm() {
         System.out.println("MainController - login_form.html");
-        LoginBody loginBody = new LoginBody();
-        model.addAttribute("loginBody", loginBody);
         return "login_form";
     }
 

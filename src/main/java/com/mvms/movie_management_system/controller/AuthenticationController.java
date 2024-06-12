@@ -25,33 +25,25 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegistrationBody registrationBody) {
         System.out.println("AuthenticationController - registerUser()");
-        try {
-            userService.registerUser(registrationBody);
-            return ResponseEntity.ok().body(Map.of("redirectUrl", "/dashboard"));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("error", e.getMessage()));
-        }
+        userService.registerUser(registrationBody);
+        return ResponseEntity.ok().body(Map.of("redirectUrl", "/dashboard"));
     }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> loginUser(@Valid @RequestBody LoginBody loginBody) {
         System.out.println("AuthenticationController - loginUser()");
-        try {
-            String jwt = userService.loginUser(loginBody);
-            if (jwt == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            } else {
-                LoginResponse response = new LoginResponse();
-                response.setJwt(jwt);
-                return ResponseEntity.ok(response);
-            }
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        String jwt = userService.loginUser(loginBody);
+        if (jwt == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } else {
+            LoginResponse response = new LoginResponse();
+            response.setJwt(jwt);
+            return ResponseEntity.ok(response);
         }
     }
-
-    @GetMapping("/me")
-    public User getLoggedInUserProfile(@AuthenticationPrincipal User user) {
-        return user;
-    }
+//
+//    @GetMapping("/me")
+//    public User getLoggedInUserProfile(@AuthenticationPrincipal User user) {
+//        return user;
+//    }
 }
