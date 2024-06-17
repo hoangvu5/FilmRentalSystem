@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
     <div class="container-fluid">
         <div class="row" style="align-items: center; height: 80vh;">
             <div class="col-sm-auto mx-auto" id="login-form-div">
-                <form id="register-form">
+                <form th:action="@{/register}" id="register-form">
                     <div class="form-floating">
                         <input autofocus class="form-control" id="username" type="text" name="username" placeholder="Username" required="required">
                         <label for="username">Username</label>
@@ -44,12 +44,15 @@
                     </div>
                     <br>
                     <div class="text-center">
-                        <button class="btn btn-primary" type="submit" style="width: 100%;">Sign Up</button>
+                        <input class="btn btn-primary" type="submit" style="width: 100%;" value="Sign Up">
                     </div>
                 </form>
 
                 <div class="text-center" id="login-redirect" style="margin-top: 10px;">
-                    Have an account? <a href="/login">Sign In</a>
+                    Have an account? <a th:href="@{/login}">Sign In</a>
+                </div>
+                <div class="text-center" th:if="${error}" style="color: red;">
+                    <p th:text="${error}"></p>
                 </div>
             </div>
         </div>

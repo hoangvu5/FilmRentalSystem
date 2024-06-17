@@ -13,40 +13,15 @@ import org.springframework.security.web.access.intercept.AuthorizationFilter;
 
 @Configuration
 public class WebSecurityConfig {
-    private JWTRequestFilter jwtRequestFilter;
-
-    public WebSecurityConfig(JWTRequestFilter jwtRequestFilter) {
-        this.jwtRequestFilter = jwtRequestFilter;
-    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Disable CSRF protection
-                .cors(cors -> cors.disable()) // Disable CORS
-                .addFilterBefore(jwtRequestFilter, AuthorizationFilter.class)
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.disable())
                 .authorizeHttpRequests(authorize -> authorize
-//                        .requestMatchers("/dashboard").authenticated() // Only dashboard needs authentication
-                        .anyRequest().permitAll() // Allow all requests
+                        .anyRequest().permitAll()
                 );
 
         return http.build();
     }
-
-//    @Bean
-//    public UserDetailsService users() {
-//        UserDetails user = User.builder()
-//                .username("user")
-//                .password("password")
-//                .roles("USER")
-//                .build();
-//
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password("password")
-//                .roles("ADMIN")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
 }
