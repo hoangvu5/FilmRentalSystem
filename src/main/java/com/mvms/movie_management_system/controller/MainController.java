@@ -3,6 +3,7 @@ package com.mvms.movie_management_system.controller;
 import com.mvms.movie_management_system.api.entity.LoginBody;
 import com.mvms.movie_management_system.api.entity.LoginResponse;
 import com.mvms.movie_management_system.api.entity.RegistrationBody;
+import com.mvms.movie_management_system.entity.Film;
 import com.mvms.movie_management_system.entity.User;
 import com.mvms.movie_management_system.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 @Controller
 public class MainController {
     @Autowired
@@ -26,7 +29,7 @@ public class MainController {
 
     @GetMapping("/")
     public String homePage() {
-        System.out.println("MainController - crudCustomers.html");
+        System.out.println("MainController - homePage()");
         return "index";
     }
 
@@ -39,7 +42,7 @@ public class MainController {
 
     @PostMapping("/register")
     public String registerUser(@Valid @ModelAttribute RegistrationBody registrationBody, HttpServletRequest request, Model model) {
-        System.out.println("AuthenticationController - registerUser()");
+        System.out.println("MainController - registerUser()");
         HttpSession session = request.getSession(true);
         try {
             User user = userService.registerUser(registrationBody);
@@ -86,8 +89,16 @@ public class MainController {
         model.addAttribute("username", user.getUsername());
         return "dashboard";
     }
+
     @GetMapping("/customers")
     public String customers() {
+        System.out.println("MainController - customers()");
         return "crudCustomers";
+    }
+
+    @GetMapping("/films")
+    public String films() {
+        System.out.println("MainController - films()");
+        return "film_all";
     }
 }

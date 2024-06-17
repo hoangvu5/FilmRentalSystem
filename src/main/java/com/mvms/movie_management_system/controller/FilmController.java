@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/api/v1")
 public class FilmController {
     @Autowired
@@ -63,17 +63,5 @@ public class FilmController {
     @GetMapping("/films/query")
     public ResponseEntity<List<Film>> queryFilmSpecial(@RequestParam String categoryName, @RequestParam String actorName) {
         return ResponseEntity.ok(filmRepository.findFilmsByCategoryActorAndInventoryCount(categoryName, actorName));
-    }
-
-    @GetMapping("/films/display_all")
-    public String displayAllFilms(Model model) {
-        List<Film> films = filmRepository.findAll();
-        model.addAttribute("films", films);
-        return "film_index";
-    }
-
-    @GetMapping("/films/film_all")
-    public String displayWithJQuery() {
-        return "film_all";
     }
 }
