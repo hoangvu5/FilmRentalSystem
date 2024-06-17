@@ -13,6 +13,8 @@ import java.util.List;
 public class CategoryController {
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("/categories")
     public List<Category> fetchCategories() {
@@ -34,10 +36,11 @@ public class CategoryController {
     @PutMapping("/categories/{id}")
     public Category updateCategory(@PathVariable Long id, @RequestBody Category category) {
         System.out.println("CategoryController - updateCategory()");
-        if (categoryRepository.findById(id).isEmpty()) {
+        Optional<Category> dbCategory = categoryService.getCategoryById(id);
+        if (dbCategory.isEmpty()) {
             throw new IllegalArgumentException("Category[id = " + id + "] does not exist.");
         } else {
-            return categoryRepository.save(category);
+            return categoryService.updateCategory(id,category);
         }
     }
 
