@@ -3,10 +3,12 @@ package com.mvms.movie_management_system.controller;
 import com.mvms.movie_management_system.entity.Category;
 
 import com.mvms.movie_management_system.repository.CategoryRepository;
+import com.mvms.movie_management_system.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")

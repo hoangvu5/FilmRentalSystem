@@ -13,22 +13,14 @@ import org.springframework.security.web.access.intercept.AuthorizationFilter;
 
 @Configuration
 public class WebSecurityConfig {
-    private JWTRequestFilter jwtRequestFilter;
-
-    public WebSecurityConfig(JWTRequestFilter jwtRequestFilter) {
-        this.jwtRequestFilter = jwtRequestFilter;
-    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Disable CSRF protection
-                .cors(cors -> cors.disable()) // Disable CORS
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/dashboard").authenticated() // Only dashboard needs authentication
-                        .anyRequest().permitAll() // Allow all requests
-                )
-                .addFilterBefore(jwtRequestFilter, AuthorizationFilter.class);
+                        .anyRequest().permitAll()
+                );
 
         return http.build();
     }

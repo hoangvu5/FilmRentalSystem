@@ -13,12 +13,10 @@ import java.util.Optional;
 public class UserService {
     private UserRepository userRepository;
     private EncryptionService encryptionService;
-    private JWTService jwtService;
 
-    public UserService(UserRepository userRepository, EncryptionService encryptionService, JWTService jwtService) {
+    public UserService(UserRepository userRepository, EncryptionService encryptionService) {
         this.userRepository = userRepository;
         this.encryptionService = encryptionService;
-        this.jwtService = jwtService;
     }
 
     public User registerUser(RegistrationBody registrationBody) {
@@ -38,12 +36,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public String loginUser(LoginBody loginBody) {
+    public User loginUser(LoginBody loginBody) {
         Optional<User> dbUser = userRepository.findByUsernameIgnoreCase(loginBody.getUsername());
         if (dbUser.isPresent()) {
             User user = dbUser.get();
             if (encryptionService.verifyPassword(loginBody.getPassword(), user.getPassword())) {
-                return jwtService.generateJWT(user);
+                return user;
             }
         }
         return null;
