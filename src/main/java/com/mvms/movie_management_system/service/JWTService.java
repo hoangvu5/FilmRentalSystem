@@ -1,7 +1,10 @@
 package com.mvms.movie_management_system.service;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.mvms.movie_management_system.entity.User;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,5 +40,17 @@ public class JWTService {
 
     public String getUsername(String token) {
         return JWT.decode(token).getClaim(USERNAME_KEY).asString();
+    }
+
+    public boolean isTokenValid(String token) {
+        try {
+            JWTVerifier verifier = JWT.require(algorithm)
+                    .withIssuer(issuer)
+                    .build();
+            DecodedJWT jwt = verifier.verify(token);
+            return jwt.getExpiresAt().after(new Date());
+        } catch (JWTVerificationException exception) {
+            return false;
+        }
     }
 }

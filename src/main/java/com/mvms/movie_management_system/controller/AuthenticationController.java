@@ -23,10 +23,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody RegistrationBody registrationBody) {
+    public ResponseEntity<Void> registerUser(@Valid @RequestBody RegistrationBody registrationBody) {
         System.out.println("AuthenticationController - registerUser()");
         userService.registerUser(registrationBody);
-        return ResponseEntity.ok().body(Map.of("redirectUrl", "/dashboard"));
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/login")
@@ -41,9 +41,4 @@ public class AuthenticationController {
             return ResponseEntity.ok(response);
         }
     }
-//
-//    @GetMapping("/me")
-//    public User getLoggedInUserProfile(@AuthenticationPrincipal User user) {
-//        return user;
-//    }
 }

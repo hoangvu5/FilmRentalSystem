@@ -39,7 +39,7 @@ function submitRegisterForm() {
         data: JSON.stringify(jsonData),
         success: function(data) {
             appendSuccessMessage('Registration successful');
-            window.location.href = data.redirectUrl;
+            window.location.href = '/login';
         },
         error: function(xhr) {
             appendErrorMessage(xhr.responseJSON.message || 'Registration failed');
@@ -62,9 +62,20 @@ function submitLoginForm() {
         data: JSON.stringify(jsonData),
         success: function(data) {
             appendSuccessMessage('Login successful');
+            localStorage.setItem('jwtToken', data.jwt);
+            window.location.href = '/dashboard';
         },
         error: function(xhr) {
             appendErrorMessage('Incorrect username or password');
         }
     })
 }
+
+$.ajaxSetup({
+    beforeSend: function(xhr) {
+        const token = localStorage.getItem('jwtToken');
+        if (token) {
+            xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+        }
+    }
+});
