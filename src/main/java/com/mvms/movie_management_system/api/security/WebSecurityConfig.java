@@ -26,7 +26,7 @@ public class WebSecurityConfig {
                 .cors(cors -> cors.disable()) // Disable CORS
                 .addFilterBefore(jwtRequestFilter, AuthorizationFilter.class)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/dashboard").authenticated() // Only dashboard needs authentication
+//                        .requestMatchers("/dashboard").authenticated() // Only dashboard needs authentication
                         .anyRequest().permitAll() // Allow all requests
                 );
 

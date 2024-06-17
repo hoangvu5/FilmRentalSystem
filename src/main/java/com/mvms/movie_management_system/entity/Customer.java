@@ -51,16 +51,24 @@ public class Customer {
     private List<Rental> rentals;
 
     public Customer() {
-        this.createdDate = this.lastUpdate = LocalDateTime.now();
+        this.createdDate = LocalDateTime.now();
+        this.lastUpdate  = LocalDateTime.now();
         this.active = true;
     }
 
-    public Customer(String firstName, String lastName, Gender gender, String email, boolean active) {
+    public Customer(Address address, String firstName, String lastName, Gender gender, boolean active, LocalDateTime createdDate, LocalDateTime lastUpdate, Set<Phone> phones, List<Order> orders, List<Rental> rentals, User user, Long id) {
+        this.address = address;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.active = active;
-        this.createdDate = this.lastUpdate = LocalDateTime.now();
+        this.createdDate = createdDate;
+        this.lastUpdate = lastUpdate;
+        this.phones = phones;
+        this.orders = orders;
+        this.rentals = rentals;
+        this.user = user;
+        this.id = id;
     }
 
     public Long getId() {
@@ -69,6 +77,14 @@ public class Customer {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public String getFirstName() {
@@ -87,14 +103,6 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-
     public Gender getGender() {
         return gender;
     }
@@ -111,12 +119,20 @@ public class Customer {
         this.active = active;
     }
 
-    public Address getAddress() {
-        return address;
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDateTime getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(LocalDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     public Set<Phone> getPhones() {
@@ -133,14 +149,6 @@ public class Customer {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
-    }
-
-    public LocalDateTime getLastUpdate() {
-        return lastUpdate;
-    }
-
-    public void setLastUpdate(LocalDateTime lastUpdate) {
-        this.lastUpdate = lastUpdate;
     }
 
     public List<Rental> getRentals() {

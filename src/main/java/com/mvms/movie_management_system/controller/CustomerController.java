@@ -4,6 +4,7 @@ import com.mvms.movie_management_system.entity.Customer;
 import com.mvms.movie_management_system.entity.Film;
 import com.mvms.movie_management_system.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class CustomerController {
     @GetMapping("/customers")
     public List<Customer> fetchCustomers() {
         System.out.println("CustomerController - fetchCustomers()");
-        return customerService.getCustomers();
+        return ResponseEntity.ok(customerService.getCustomers()).getBody();
     }
 
     @PostMapping("/customers")
@@ -27,7 +28,7 @@ public class CustomerController {
         if (customer.getId() != null && customerService.getCustomerById(customer.getId()).isPresent()) {
             throw new IllegalArgumentException("Customer[id = " + customer.getId() + "] has already existed.");
         }
-        return customerService.createCustomer(customer);
+        return ResponseEntity.ok(customerService.createCustomer(customer)).getBody();
     }
 
     @PutMapping("/customers/{id}")

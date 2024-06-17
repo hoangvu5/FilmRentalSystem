@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
     @GetMapping("/")
     public String homePage() {
-        System.out.println("MainController - index.html");
+        System.out.println("MainController - crudCustomers.html");
         return "index";
     }
 
@@ -32,5 +32,9 @@ public class MainController {
     public String dashboard() {
         System.out.println("MainController - dashboard.html");
         return "dashboard";
+    }
+    @GetMapping("/customers")
+    public String customers() {
+        return "crudCustomers";
     }
 }
