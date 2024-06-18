@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,16 +7,21 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="js/script.js"></script>
-    <script src="/js/film_all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/films_list.js"></script>
 
     <title>Film Rental - Films</title>
-
 </head>
 <body>
 <div class="warnings"></div>
-<div id="film-container"></div>
+<div class="container mt-5">
+    <h1 class="mb-4">Film Management</h1>
+    
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="film-container">
+
+    </div>
+</div>
 
 </body>
 </html>

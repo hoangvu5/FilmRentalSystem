@@ -1,24 +1,18 @@
 package com.mvms.movie_management_system.controller;
 
 import com.mvms.movie_management_system.api.entity.LoginBody;
-import com.mvms.movie_management_system.api.entity.LoginResponse;
 import com.mvms.movie_management_system.api.entity.RegistrationBody;
-import com.mvms.movie_management_system.entity.Film;
 import com.mvms.movie_management_system.entity.User;
 import com.mvms.movie_management_system.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -99,6 +93,12 @@ public class MainController {
     @GetMapping("/films")
     public String films() {
         System.out.println("MainController - films()");
-        return "film_all";
+        return "films";
+    }
+
+    @GetMapping("/films_list")
+    public String displayFilms() {
+        System.out.println("MainController - displayFilms()");
+        return "films_list";
     }
 }

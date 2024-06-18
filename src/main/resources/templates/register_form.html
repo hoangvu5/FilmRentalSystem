@@ -17,7 +17,7 @@
     <div class="container-fluid">
         <div class="row" style="align-items: center; height: 80vh;">
             <div class="col-sm-auto mx-auto" id="login-form-div">
-                <form th:action="@{/register}" id="register-form">
+                <form th:action="@{/register}" method="post" id="register-form">
                     <div class="form-floating">
                         <input autofocus class="form-control" id="username" type="text" name="username" placeholder="Username" required="required">
                         <label for="username">Username</label>

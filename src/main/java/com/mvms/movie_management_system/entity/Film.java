@@ -1,5 +1,6 @@
 package com.mvms.movie_management_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -24,7 +25,7 @@ public class Film {
     private String title;
 
     @NotNull(message = "Description cannot be null")
-    @Size(min = 1, message = "Description must not be empty")
+    @Size(min = 1, max = 5000, message = "Description must not be empty")
     @Column(name = "description", nullable = false)
     private String description;
 
@@ -69,6 +70,7 @@ public class Film {
 
     @NotNull(message = "Full text cannot be null")
     @Column(name = "full_text", nullable = false)
+    @JsonProperty("fullText")
     private String fullText;
 
     @ManyToOne
